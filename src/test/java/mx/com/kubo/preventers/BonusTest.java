@@ -37,7 +37,7 @@ public class BonusTest {
     @Test
     public void calculateBonus() throws Exception {
         Employee employee = new CustomerService(1, "foo");
-        Bonus bonus = new BonusCustomerService(employee, invoice);
+        BonusCustomerMediator bonus = new BonusCustomerMediator(employee, invoice, BonusType.REGULAR);
         assertEquals(new BigDecimal("1.250"), bonus.calculateBonus());
         assertEquals("Customer service bonus", bonus.bonusType());
         assertEquals("1 - foo - Customer Service", bonus.getHeader());
@@ -46,7 +46,7 @@ public class BonusTest {
     @Test
     public void calculatePremiumCustomerServiceBonus() throws Exception {
         Employee employee = new PremiumCustomerService(1, "foo");
-        Bonus bonus = new BonusPremiumCustomerService(employee, invoice);
+        BonusCustomerMediator bonus = new BonusCustomerMediator(employee, invoice, BonusType.PREMIUM);
         assertEquals(new BigDecimal("1.750"), bonus.calculateBonus());
         assertEquals("Premium customer service", bonus.bonusType());
         assertEquals("1 - foo - Premium Customer Service", bonus.getHeader());

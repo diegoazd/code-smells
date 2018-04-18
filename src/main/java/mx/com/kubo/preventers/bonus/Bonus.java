@@ -6,5 +6,4 @@ public interface Bonus {
 
     BigDecimal calculateBonus();
     String bonusType();
-    String getHeader();
 }
