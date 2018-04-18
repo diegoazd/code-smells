@@ -1,86 +1,89 @@
 package mx.com.kubo.bloaters;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static mx.com.kubo.bloaters.Role.*;
 
-public class UserManagementTest {
-
-    UserManagement userManagement;
-
-    @Before
-    public void setup() {
-        userManagement = new UserManagement();
-    }
-
+public class UserManagementTest 
+{
     @Test
     public void shouldLoginAsAdministrator() {
-        User user = userManagement.login("admin", "securePassword");
+        User user = UserManagement.builder().build()
+        .login("admin", "securePassword");
         assertNotNull(user);
         assertEquals("admin", user.getUser());
-        assertEquals(UserManagement.ADMIN_ROLE, user.getUserRole());
+        assertEquals(ADMIN_ROLE, user.getRole());
     }
 
     @Test
     public void shouldLoginAsManager() {
-        User user = userManagement.login("manager", "securePassword");
+        User user = UserManagement.builder().build()
+        .login("manager", "securePassword");
         assertNotNull(user);
         assertEquals("manager", user.getUser());
-        assertEquals(UserManagement.MANAGER_ROLE, user.getUserRole());
+        assertEquals(MANAGER_ROLE, user.getRole());
     }
 
     @Test
     public void shouldLoginAsCustomerService() {
-        User user = userManagement.login("customer_service", "securePassword");
+        User user = UserManagement.builder().build()
+        .login("customer_service", "securePassword");
         assertNotNull(user);
         assertEquals("customer_service", user.getUser());
-        assertEquals(UserManagement.CUSTOMER_SERVICE_ROLE, user.getUserRole());
+        assertEquals(CUSTOMER_SERVICE_ROLE, user.getRole());
     }
 
     @Test
     public void shouldLoginAsAccountant() {
-        User user = userManagement.login("accountant", "securePassword");
+        User user = UserManagement.builder().build()
+        .login("accountant", "securePassword");
         assertNotNull(user);
         assertEquals("accountant", user.getUser());
-        assertEquals(UserManagement.ACCOUNTANT_ROLE, user.getUserRole());
+        assertEquals(ACCOUNTANT_ROLE, user.getRole());
     }
 
     @Test
-    public void shouldLoginAsUser() {
-        User user = userManagement.login("user", "securePassword");
+    public void shouldLoginAsUser() 
+    {
+        User user = UserManagement.builder().build()
+        .login("user", "securePassword");
         assertNotNull(user);
         assertEquals("user", user.getUser());
-        assertEquals(UserManagement.USER_ROLE, user.getUserRole());
+        assertEquals(USER_ROLE, user.getRole());
     }
 
     @Test(expected = RuntimeException.class)
     public void shouldThrowExceptionWHenUserNotFound() {
-        userManagement.login("foo", "securePassword");
+    	UserManagement.builder().build()
+    	.login("foo", "securePassword");
     }
 
     @Test(expected = RuntimeException.class)
     public void shouldThrowExceptionWhenUserPasswordNotMath() {
-        userManagement.login("user", "notSecurePassword");
+    	UserManagement.builder().build()
+    	.login("user", "notSecurePassword");
     }
 
-
-        @Test
+    @Test
     public void shouldRegisterUser() {
-        User user = userManagement.register("abcde", "securePassword");
+        User user = UserManagement.builder().build()
+        .register("abcde", "securePassword");
         assertEquals("abcde", user.getUser());
         assertEquals("securePassword", user.getPassword());
-        assertEquals(UserManagement.USER_ROLE, user.getUserRole());
+        assertEquals(USER_ROLE, user.getRole());
     }
 
     @Test(expected = RuntimeException.class)
     public void shouldThrowExceptionWhenRegisterUser() {
-        userManagement.register("admin", "securePassword");
+    	UserManagement.builder().build()
+    	.register("admin", "securePassword");
     }
 
     @Test
     public void shouldCreateAddress() {
-        assertTrue(userManagement.validateAddress("street", "number int", "number int", "" +
+        assertTrue(UserManagement.builder().build()
+        .validateAddress("street", "number int", "number int", "" +
                 "postal code", "colony", "city", "state", "country"));
     }
 
