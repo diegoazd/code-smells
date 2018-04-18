@@ -1,8 +1,8 @@
 package mx.com.kubo.preventers.bonus;
 
-public interface Employee {
-
-    String getName();
-    int getId();
+public interface Employee 
+{
+	int getId();
+    String getName();    
     String getType();
 }

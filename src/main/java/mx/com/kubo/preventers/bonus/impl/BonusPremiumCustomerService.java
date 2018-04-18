@@ -6,31 +6,33 @@ import mx.com.kubo.preventers.reports.impl.Invoice;
 
 import java.math.BigDecimal;
 
-public class BonusPremiumCustomerService implements Bonus {
+import lombok.Builder;
 
+@Builder
+public class BonusPremiumCustomerService implements Bonus 
+{
     private Employee employee;
     private Invoice invoice;
 
-    public BonusPremiumCustomerService(Employee employee, Invoice invoice) {
-        this.employee = employee;
-        this.invoice = invoice;
+    public BigDecimal calculateBonus() 
+    {
+        return BonusCalculator.builder()
+        .invoice(invoice)
+        .bonusFactor(PREMIUM)
+        .build()
+        .calculate();
     }
 
-
-    @Override
-    public BigDecimal calculateBonus() {
-        return invoice.getLineItem().stream().map(item -> item.getPrice())
-                .reduce(BigDecimal.ZERO, BigDecimal::add)
-                .multiply(BigDecimal.valueOf(0.07d));
-    }
-
-    @Override
-    public String bonusType() {
+    public String bonusType() 
+    {
         return "Premium customer service";
     }
 
-    @Override
-    public String getHeader() {
-        return employee.getId()+" - "+employee.getName()+" - "+employee.getType();
+    public String getHeader() 
+    {
+        return BonusCalculator.builder()
+        .employee(employee)
+        .build()
+        .getHeader();
     }
 }

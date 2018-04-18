@@ -5,8 +5,11 @@ import mx.com.kubo.preventers.reports.InvoicePrinter;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class Invoice implements InvoicePrinter {
+import lombok.Getter;
 
+public class Invoice implements InvoicePrinter 
+{
+	@Getter
     private List<Item> lineItem;
     private String customer;
     private BigDecimal total;
@@ -75,10 +78,4 @@ public class Invoice implements InvoicePrinter {
 
         return sb.toString();
     }
-
-    public List<Item> getLineItem() {
-        return lineItem;
-    }
-
-
 }

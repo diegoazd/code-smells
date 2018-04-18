@@ -16,14 +16,15 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class BonusTest {
-
+public class BonusTest 
+{
     List<Item> items;
     String user;
     Invoice invoice;
 
     @Before
-    public void setup() {
+    public void setup() 
+    {
         items = new ArrayList<>();
         Item item = new Item(1, "item 1", BigDecimal.valueOf(10.00d));
         Item item2= new Item(2, "item 2", BigDecimal.valueOf(15.00d));
@@ -35,18 +36,26 @@ public class BonusTest {
     }
 
     @Test
-    public void calculateBonus() throws Exception {
-        Employee employee = new CustomerService(1, "foo");
-        Bonus bonus = new BonusCustomerService(employee, invoice);
+    public void calculateBonus() throws Exception 
+    {
+        Bonus bonus = BonusCustomerService.builder()
+        .employee(CustomerService.builder()
+        .id(1).name("foo").build())
+        .invoice(invoice).build();
+        
         assertEquals(new BigDecimal("1.250"), bonus.calculateBonus());
         assertEquals("Customer service bonus", bonus.bonusType());
         assertEquals("1 - foo - Customer Service", bonus.getHeader());
     }
 
     @Test
-    public void calculatePremiumCustomerServiceBonus() throws Exception {
-        Employee employee = new PremiumCustomerService(1, "foo");
-        Bonus bonus = new BonusPremiumCustomerService(employee, invoice);
+    public void calculatePremiumCustomerServiceBonus() throws Exception 
+    {       
+        Bonus bonus = BonusPremiumCustomerService.builder()
+        .employee(PremiumCustomerService.builder()
+        .id(1).name("foo").build())
+        .invoice(invoice).build();
+        
         assertEquals(new BigDecimal("1.750"), bonus.calculateBonus());
         assertEquals("Premium customer service", bonus.bonusType());
         assertEquals("1 - foo - Premium Customer Service", bonus.getHeader());
