@@ -1,44 +1,43 @@
 package mx.com.kubo.abusers.impl;
 
+import mx.com.kubo.abusers.SpeedFactory;
 import mx.com.kubo.abusers.AirPlaneType;
 import mx.com.kubo.abusers.AirVehicle;
+import static mx.com.kubo.abusers.AirPlaneType.CARRIER;
 
-public class AirPlane implements AirVehicle {
-    AirPlaneType type;
-    int loadFactor;
-
-    public AirPlane(AirPlaneType type) {
-        if(type == AirPlaneType.CARRIER) {
+public class AirPlane implements AirVehicle 
+{ 	
+	private AirVehicleDTO dto;   
+    
+    public AirPlane(AirPlaneType type) 
+    {
+        if(type == CARRIER) 
+        {
             throw new RuntimeException("Invalid argument");
         }
-        this.type = type;
+        
+        dto = AirVehicleDTO
+        .builder()
+        .airplane(type)
+        .build();        
     }
 
-    public AirPlane(AirPlaneType type, int loadFactor) {
-        this.type = type;
-        this.loadFactor = loadFactor;
+    public AirPlane(AirPlaneType type, int loadFactor) 
+   {        
+        dto = AirVehicleDTO
+        .builder()
+        .airplane(type)
+        .loadFactor(loadFactor)
+        .build();
+    }  
+        
+    public String getType() 
+    {
+        return dto.getAirplane().getName();
     }
 
-    @Override
-    public double getSpeed() {
-        double speed;
-
-        switch (type) {
-            case CONCORDE:
-                speed =  2198.00d;
-                break;
-            case CARRIER:
-                speed = 2000 - loadFactor * 0.5;
-                break;
-            default:
-                speed = 100.00d;
-        }
-
-        return speed;
-    }
-
-    @Override
-    public String getType() {
-        return type.getType();
+    public double getSpeed() 
+    {    	
+    	return SpeedFactory.getInstance(dto).getSpeed();      
     }
 }

@@ -1,37 +1,39 @@
 package mx.com.kubo.abusers.impl;
 
-import mx.com.kubo.abusers.AirPlaneType;
+import mx.com.kubo.abusers.AirVehicle;
 import mx.com.kubo.abusers.DroneType;
 
-public class Drone extends AirPlane {
+import static mx.com.kubo.abusers.AirPlaneType.DRONE;
 
-    public DroneType droneType;
+public class Drone implements AirVehicle 
+{       
+    private AirVehicleDTO dto;
 
-    public Drone(DroneType droneType) {
-        super(AirPlaneType.DRONE);
-        this.droneType = droneType;
+    public Drone(DroneType type) 
+    {        
+        dto = AirVehicleDTO
+        .builder()
+        .airplane(DRONE)
+        .build();
+        
+        dto.setDrone(type);
     }
 
     @Override
-    public double getSpeed() {
-        switch (droneType) {
-            case SINGLE_ROTOR:
-                return 100.00d;
-            case FIXED_WING:
-                return 150.00d;
-            default:
-                return 60.00d;
-        }
+    public double getSpeed() 
+    {
+    	return dto.getDrone().getSpeed();        
     }
 
     @Override
     @Deprecated
-    public String getType() {
-        return null;
+    public String getType() 
+    {
+        return dto.getAirplane().getName();
     }
 
-    public int getDroneType() {
-        return droneType.getDroneType();
+    public int getDroneType() 
+    {
+        return dto.getDrone().getType();
     }
-
 }

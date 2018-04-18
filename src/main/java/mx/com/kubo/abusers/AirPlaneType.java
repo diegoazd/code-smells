@@ -1,15 +1,20 @@
 package mx.com.kubo.abusers;
 
-public enum AirPlaneType {
-    CONCORDE("Concorde"), CARRIER("Carrier"), DRONE("Drone");
+public enum AirPlaneType 
+{
+    CONCORDE("Concorde"), 
+    CARRIER("Carrier"), 
+    DRONE("Drone");
 
-    private String type;
-
-    AirPlaneType(String type) {
-        this.type = type;
+    private String name;
+    
+    AirPlaneType(String name) 
+    {
+        this.name = name;
     }
 
-    public String getType() {
-        return type;
+    public String getName() 
+    {
+        return name;
     }
 }
