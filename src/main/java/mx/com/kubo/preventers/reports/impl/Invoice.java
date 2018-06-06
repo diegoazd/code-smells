@@ -5,6 +5,7 @@ import mx.com.kubo.preventers.reports.print.AsciiPrinter;
 import mx.com.kubo.preventers.reports.print.BillPrinter;
 import mx.com.kubo.preventers.reports.print.HtmlPrinter;
 import mx.com.kubo.preventers.reports.print.XmlPrinter;
+import mx.com.kubo.preventers.reports.print.BillPrinter;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -36,19 +37,20 @@ public class Invoice implements InvoicePrinter {
     }
 
     private String statement(BillPrinter billPrinter) {
+        String s = billPrinter.header(customer);
         total = BigDecimal.ZERO;
-        StringBuffer sb = new StringBuffer(billPrinter.header(customer));
-
-        lineItem.stream().forEach(item -> {
-            sb.append(billPrinter.item(item));
+        for(Item item: lineItem) {
+            s+=billPrinter.item(item);
             total = total.add(item.getPrice());
-        });
+        }
 
-        sb.append(billPrinter.total(total));
-        return sb.toString();
+        s+=billPrinter.total(total);
+        return s;
     }
 
     public List<Item> getLineItem() {
         return lineItem;
     }
+
+
 }

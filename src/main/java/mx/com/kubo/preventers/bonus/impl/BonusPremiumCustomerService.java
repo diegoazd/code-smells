@@ -1,6 +1,7 @@
 package mx.com.kubo.preventers.bonus.impl;
 
 import mx.com.kubo.preventers.bonus.Bonus;
+import mx.com.kubo.preventers.bonus.CustomerServiceInfo;
 import mx.com.kubo.preventers.bonus.Employee;
 import mx.com.kubo.preventers.reports.impl.Invoice;
 
@@ -8,14 +9,11 @@ import java.math.BigDecimal;
 
 public class BonusPremiumCustomerService implements Bonus {
 
-    private Employee employee;
     private Invoice invoice;
 
-    public BonusPremiumCustomerService(Employee employee, Invoice invoice) {
-        this.employee = employee;
+    public BonusPremiumCustomerService(Invoice invoice) {
         this.invoice = invoice;
     }
-
 
     @Override
     public BigDecimal calculateBonus() {
@@ -27,10 +25,5 @@ public class BonusPremiumCustomerService implements Bonus {
     @Override
     public String bonusType() {
         return "Premium customer service";
-    }
-
-    @Override
-    public String getHeader() {
-        return employee.getId()+" - "+employee.getName()+" - "+employee.getType();
     }
 }

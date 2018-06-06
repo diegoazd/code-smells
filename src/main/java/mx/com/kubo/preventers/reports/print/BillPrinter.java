@@ -1,6 +1,7 @@
 package mx.com.kubo.preventers.reports.print;
 
 import mx.com.kubo.preventers.reports.impl.Item;
+
 import java.math.BigDecimal;
 
 public interface BillPrinter {
